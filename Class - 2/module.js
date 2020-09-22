@@ -117,3 +117,11 @@ if(!fs.existsSync('./docs/deleteme.txt')){
     })
 }*/
 
+
+fs.rmdirSync('./folder', {recursive: true}, (err)=>{
+    if(err){
+        console.log('Erro was delected!\nErro: ' + err.message)
+    } else {
+        console.log('Folder deleted')
+    }
+})

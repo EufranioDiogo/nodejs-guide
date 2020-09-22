@@ -4,7 +4,7 @@
 At this lesson I learned 3 main things and those are:
 - Importing and Exporting modules
 - Working with file system
-- Knowing More a little about the power of node.js, and why I need to do some stuff.
+- Input Stream and Output Stream
 
 
 ## Importing and Exporting modules
@@ -15,9 +15,10 @@ Exporting operation is when you're giving the opportunity to other files import 
 <br>
 Example:
 <br>
-Those files are at the same folder.
+
+### Exporting
+file name: math_functions.js
 ```
-// file name: math_functions.js
 function fact(number){
     let product = 1;
 
@@ -28,9 +29,14 @@ function fact(number){
 }
 
 module.exports = {fact: fact}
+```
 
-// file name: main_program.js
 
+### Importing
+<br>
+file name: main_program.js
+
+```
 const { fact } = require('./math_functions')
 
 let result = fact(3)
@@ -38,9 +44,10 @@ let result = fact(3)
 console.log(result) // Output:  6
 ```
 
-explaining: At the first file name math_functions.js there I declared a function named fact that his main purpose is compute the factorial of a number, but as you can see we are not using it at it's own file, because we don't use it there we want use it in onether file called main_program.js at this file is where we want that the things happen, and for this happen or for we get access to the function that was declared at the previous file we need to export this function, making it avaible to be used in other parts of the program and to happen this we really need to export, and to export a function, object, array, variable or other stuff we need to type:
 
-**module.exports = { fact: fact}**
+**Explaining:** At the first file name math_functions.js there I declared a function named fact that his main purpose is compute the factorial of a number, but as you can see we are not using it at it's own file, because we don't use it there we want use it in onether file called main_program.js at this file is where we want that the things happen, and for this happen or for we get access to the function that was declared at the previous file we need to export this function, making it avaible to be used in other parts of the program and to happen this we really need to export, and to export a function, object, array, variable or other stuff we need to type:
+
+**module.exports = { fact: fact }**
 
 module.exports -> basically means that we are exporting something.
 {fact: fact} -> means the object that we are exporting!
@@ -61,10 +68,49 @@ Like we were importing data, functions from modules and stuff like that, when we
 
 When we are working with file system we need to have a lot of attention because we can modify it's own structure and cause problems, cause of that, please pay attention on the commands that you type.
 
-### Important internal variables
-__filename
-__dirname 
-
 Those vars allow us to know where we are executing and what file we are executing
 
-### Creating & Removing folder
+## Creating & Removing folder
+
+### Creating Folder
+
+```
+const fs = require('fs')
+const folderName = './Hello World'
+
+fs.mkdir(folderName, (err)=>{
+    if(err){
+        console.log('One error occurred!\n' + err.message)
+    } else {
+        console.log('Folder ' + folderName + ' created!')
+    }
+})
+```
+
+mkdir method basically give to us the oportunity to create a folder it extends from (make directory), inside of this method we gave 2 arguments, 1º Folder name and 2º A callback function, why?
+
+Folder name especify the relative path where the folder will be created and the name of the folder, it means that when we are creating a folder we need to specify where it will be created and the folder name as the last thing inside the folderName const.
+<br>
+`./` -> It basically means that we creating the folder at the current location
+`Hello World` -> Folder name.
+
+We insert a callback function, that will return to us a message that we'll alert us if the folder was created or no!
+
+### Deleting Folder
+
+```
+const fs = require('fs')
+const folderName = './Hello World'
+
+fs.rmdirSync(folderName, (err)=>{
+    if(err){
+        console.log('An error occurred while deleting the folder: ' + folderName)
+    } else {
+        console.log('Folder ' + folderName + ' was sucessufly delected')
+    }
+})
+```
+
+At this example we basicaly did the same thing that we did at the previous code, while we was creating the folder, now we are only deleting the folder created, at the last example.
+
+Why the method is called **rmdirSync**
